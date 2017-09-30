@@ -19,6 +19,7 @@
 	function main() {
 		firebase.initializeApp(config);
 		const auth = firebase.auth();
+
 		// Making sure the current user is actively signed in
 		auth.onAuthStateChanged(firebaseUser => 
 			{
@@ -45,6 +46,7 @@
 			});
 			$('.signout-button').click(signout);
 			$('.send-message').click(sendMessage);
+			$('.back-button').click(backButton);
 		}
 
 	function signout()
@@ -54,7 +56,11 @@
 
 	function sendMessage()
 	{
-		// REDIRECT TO SEND MESSAGE PAGE OR POPUP
+		window.location.replace("sendmessage.html");
 	}
 
+	function backButton()
+	{
+		window.location.replace("signedin.html")
+	}
 })();

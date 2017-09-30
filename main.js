@@ -68,7 +68,7 @@
 			auth.createUserWithEmailAndPassword(email, pass);
 			
 			var database = firebase.database();
-			var ref = database.ref("name");
+			var ref = database.ref("users");
 			var userInfo = {
 				email_id: email,
 				}
@@ -81,6 +81,7 @@
 
 		}
 		alert('account created, now login');
+		
 		
 	}
 
