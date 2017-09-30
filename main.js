@@ -18,7 +18,9 @@
 	// Main Function
 	function main() {
 		firebase.initializeApp(config);
-		$('.login-button').click(login);
+		// Login button on main page 
+		$('.myButton').click(login);
+		// Sign up button
 		$('.signup-button-on-page').click(signup);
 		}
 
