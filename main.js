@@ -18,7 +18,9 @@
 	// Main Function
 	function main() {
 		firebase.initializeApp(config);
-		$('.login-button').click(login);
+		// Login button on main page 
+		$('.myButton').click(login);
+		// Sign up button
 		$('.signup-button-on-page').click(signup);
 		}
 
@@ -64,6 +66,15 @@
 		var pass = $('.password-box').val();
 		try {
 			auth.createUserWithEmailAndPassword(email, pass);
+			
+			var database = firebase.database();
+			var ref = database.ref("name");
+			var userInfo = {
+				email_id: email,
+				}
+				ref.push(userInfo);
+			
+
 		}
 		catch(e)
 		{

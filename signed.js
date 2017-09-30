@@ -44,11 +44,17 @@
 				// LEFT OFF RIGHT HERE
 			});
 			$('.signout-button').click(signout);
+			$('.send-message').click(sendMessage);
 		}
 
 	function signout()
 	{
 		firebase.auth().signOut();
+	}
+
+	function sendMessage()
+	{
+		// REDIRECT TO SEND MESSAGE PAGE OR POPUP
 	}
 
 })();
