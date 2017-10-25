@@ -40,7 +40,7 @@ body {
 	margin: auto;
 	background-color: white;
 	text-align: center;
-	width: 400px;
+	width: 500px;
 	padding-top: 5px;
 	padding-bottom: 25px;
 	border-radius: 20px;
@@ -179,4 +179,55 @@ p.chats-title
 {
 	color: blue;
 	cursor: default;
+}
+.all-users-title
+{
+	text-align: center;
+	text-decoration: bold;
+	font-size: 35pt;
+	color: black;
+	padding-top: 0px;
+	padding-bottom: 10px;
+	margin: 0px;
+	font-family: 'Germania One', cursive;
+	font-type: underline;
+}
+.back-button
+{
+
+}
+.space-1
+{
+	margin: 0px;
+	height: 40px;
+	width: 100%;
+}
+.space-2
+{
+	margin: 0px;
+	height: 40px;
+	width: 100%;
+}
+.subtitle-text
+{
+text-align: center;
+	text-decoration: bold;
+	font-size: 15pt;
+	color: black;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin: 0px;
+	font-family: 'Germania One', cursive;
+}
+.search-result
+{
+	text-align: left;
+	text-decoration: bold;
+	font-size: 10pt;
+	color: black;
+	padding-top: 0px;
+	padding-bottom: 10px;
+	margin: 0px;
+	font-family: 'Germania One', cursive;
+	font-type: underline;
 }
