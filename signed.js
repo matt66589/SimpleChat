@@ -14,25 +14,10 @@
   	// Tells if We're Signed in or not
 	var signedin = false;
 	var currentUser;
-	var alluserssearch = false;
 
 	// Main Function
 	function main() {
-		if(alluserssearch)
-		{
-			// WRiTE THE STUFF FOR SEARHCHING THE DATABASE
-			// Make sure to have it false when its doe with searching the fatabase
-			var ref = firebase.database().ref('users');
-			var events = ref.child('email_id');
-			
-			
-
-			
-		}
-		else
-		{
-
-
+		
 			firebase.initializeApp(config);
 			const auth = firebase.auth();
 
@@ -65,7 +50,7 @@
 				$('.send-message').click(sendMessage);
 				$('.back-button').click(backButton);
 				$('.all-users').click(allUsersButton);
-			}
+			
 		}
 
 
@@ -85,7 +70,14 @@
 	}
 	function allUsersButton()
 	{
+		//TEMPORARY CHANGEMEEEEE TODO
 		window.location.replace("allusers.html");
-		alluserssearch = true;
+		
+		// WRiTE THE STUFF FOR SEARHCHING THE DATABASE
+			// Make sure to have it false when its doe with searching the database
+			// https://www.youtube.com/watch?v=oYhIhEVmXXw
+			 // test to see if we got here
+			
 	}
+
 })();

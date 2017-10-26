@@ -221,7 +221,7 @@ text-align: center;
 }
 .search-result
 {
-	text-align: left;
+	text-align: center;
 	text-decoration: bold;
 	font-size: 10pt;
 	color: black;
@@ -229,5 +229,5 @@ text-align: center;
 	padding-bottom: 10px;
 	margin: 0px;
 	font-family: 'Germania One', cursive;
-	font-type: underline;
+	
 }
