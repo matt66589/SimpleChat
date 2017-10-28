@@ -226,8 +226,20 @@ text-align: center;
 	font-size: 10pt;
 	color: black;
 	padding-top: 0px;
-	padding-bottom: 10px;
+	padding-bottom: 0px;
 	margin: 0px;
 	font-family: 'Germania One', cursive;
 	
+}
+
+.sr-styles
+{
+	text-align: center;
+	text-decoration: bold;
+	font-size: 10pt;
+	color: black;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin: 0px;
+	font-family: 'Germania One', cursive;
 }
