@@ -243,3 +243,9 @@ text-align: center;
 	margin: 0px;
 	font-family: 'Germania One', cursive;
 }
+
+.sr-styles:hover
+{
+	color: blue;
+	cursor: default;
+}
