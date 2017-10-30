@@ -61,45 +61,78 @@
 
 	// If Signup Button is Clicked
 	function signup() {
+		
+
 		const auth = firebase.auth();
 		var email = $('.email-box').val();
 		var pass = $('.password-box').val();
-		try {
-			auth.createUserWithEmailAndPassword(email, pass);
+		// First we have to make sure that they typed something
+
+		if(email == "" || pass == "" || email == " " || pass == " ")
+		{
 			
-			var database = firebase.database();
-			var ref = database.ref("users");
-			var userInfo = {
-				email_id: email,
+		}
+		else
+		{
+				// Before we sign them up into the database we gotta make sure they arent already in it.
+			if(searchfor(email))
+			{
+				try 
+				{
+					auth.createUserWithEmailAndPassword(email, pass);
+					
+					var database = firebase.database();
+					var ref = database.ref("users");
+					var userInfo = 
+					{
+						email_id: email,
+					}
+
+						ref.push(userInfo);
+						alert('account created, now login');
 				}
-				ref.push(userInfo);
+				catch(e)
+				{
+					alert('something went really wrong with trying to communicate with the database');
+				}
 			
-
+			
+			}
+			else
+			{
+				alert('Email already has an account!');
+			}
 		}
-		catch(e)
-		{
+		
+		
 
-		}
-		alert('account created, now login');
+		
 		
 		
 	}
 
 
-	/* USED TO USE THIS FUNCTION NOW IM THINKING ITS NOT SUCH A GOOD IDEA
-	function signinchanged()
+	function searchfor(var email)
 	{
-		if(signedin == false)
+		var dataRef = firebase.database().ref("users");
+		dataRef.equalTo(email).limitToFirst(1).on("child_added", function(snapshot)
 		{
-			signedin = true;
-			alert('signin state changed, si');
-		}
-		else {
-			signedin = false;
-			alert('signin state changed');
-		}
+			
+			var searchResult;
+			snapshot.forEach(function(result)
+				{
+					searchResult = result;
+				});
+			if(searchResult == email)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		})
 
 	}
-	*/
 
 })();
