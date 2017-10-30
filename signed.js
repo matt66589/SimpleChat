@@ -14,13 +14,13 @@
   	// Tells if We're Signed in or not
 	var signedin = false;
 	var currentUser;
+	
 
 	// Main Function
 	function main() {
 		
 			firebase.initializeApp(config);
 			const auth = firebase.auth();
-
 
 			// Making sure the current user is actively signed in
 			auth.onAuthStateChanged(firebaseUser => 
@@ -44,7 +44,43 @@
 					currentUser = firebaseUser;
 					$('.welcome-user').text('Welcome ' + email);
 
-					// LEFT OFF RIGHT HERE
+					// MESSAGING WONT WORK BECAUSE TO USE FIREBASE CLOUD MESSAGING YOU NEED TO BE USING AN SSL CONNECTION
+					//
+					/////////////////////////////////////////////////////////////////////////////////////////////////////
+					const messaging = firebase.messaging();
+			
+			
+
+					messaging.requestPermission()
+					.then(function() 
+					{
+						
+						console.log('Permission to show notifications granted');
+						return messaging.getToken();
+					})
+					
+					.then(function(token) 
+					{
+						console.log(token);
+					})
+					
+					.catch(function(err)
+						{
+							console.log(err);
+						});
+
+
+				messaging.setBackgroundMessageHandler(function(payload) 
+					{
+						
+						var title = "New Message";
+						var options = {
+							body: payload.data.status// NOT FINISHED WITH THIS
+						}
+						return self.registration.showNotification(title, options);
+					});
+
+				///////////////////////////////////////////////////////////////////////////////////////////////////////
 				});
 				$('.signout-button').click(signout);
 				$('.send-message').click(sendMessage);

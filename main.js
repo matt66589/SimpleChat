@@ -14,9 +14,30 @@
   	// Tells if We're Signed in or not
 	var signedin = false;
 	var currentUser;
-
+	//var messaging = firebase.messaging();
 	// Main Function
 	function main() {
+		
+		
+		// messaging.requestPermission().then(function() 
+		// 	{
+		// 		var token = messaging.getToken();
+		// 		console.log('Permission to show notifications granted');
+		// 		console.log('Token is ', tokn);
+		// 	});
+
+		// messaging.setBackgroundMessageHandler(function(payload) 
+		// 	{
+		// 		/*
+		// 		var title = "test";
+		// 		var options = 
+		// 		{
+		// 			body: payload.data.// NOT FINISHED WITH THIS
+		// 		}
+		// 		*/
+		// 	});
+
+
 		firebase.initializeApp(config);
 		// Login button on main page 
 		$('.myButton').click(login);
@@ -70,7 +91,7 @@
 
 		if(email == "" || pass == "" || email == " " || pass == " ")
 		{
-			
+
 		}
 		else
 		{
@@ -112,7 +133,7 @@
 	}
 
 
-	function searchfor(var email)
+	function searchfor(email)
 	{
 		var dataRef = firebase.database().ref("users");
 		dataRef.equalTo(email).limitToFirst(1).on("child_added", function(snapshot)
