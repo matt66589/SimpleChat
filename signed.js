@@ -86,6 +86,8 @@
 				$('.send-message').click(sendMessage);
 				$('.back-button').click(backButton);
 				$('.all-users').click(allUsersButton);
+				$('.group-text').click(groupChatClick);
+
 			
 		}
 
@@ -97,7 +99,9 @@
 
 	function sendMessage()
 	{
-		window.location.replace("sendmessage.html");
+		var text = $('.send-text').val();
+		messageSender(text);
+
 	}
 
 	function backButton()
@@ -114,6 +118,42 @@
 			// https://www.youtube.com/watch?v=oYhIhEVmXXw
 			 // test to see if we got here
 			
+	}
+	function groupChatClick()
+	{
+		window.location.replace("groupchat.html");
+		messageUpdater();
+	}
+	function messageUpdater()
+	{
+		var ref = firebase.database().ref('GC');
+		ref.on("child_added", function(snapshot)
+		{
+			snapshot.forEach(function(iResult)
+			{
+				alert(iResult);
+			});
+		});
+
+	}
+	function messageSender(message)
+	{
+		// NEED An IF STATEMENT TO CHECK FOR AN EMPTY BOX BEFORE
+		// SENDING THE MESSAGE TO THE DATABASE
+
+				var messagePath = firebase.database().ref('GC');
+			// We need to gather user information right here
+			var userInfo = firebase.auth().currentUser;
+
+			var messageStruct = 
+			{
+				text : message,
+				sender : "Anonymous",
+
+			}
+			messagePath.push(messageStruct);
+			$('.send-text').val('');
+
 	}
 
 })();

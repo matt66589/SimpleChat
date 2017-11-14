@@ -180,3 +180,12 @@ p.chats-title
 	color: blue;
 	cursor: default;
 }
+.group-text
+{
+
+}
+.group-text:hover
+{
+	color: blue;
+	cursor: default;
+}
