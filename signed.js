@@ -123,12 +123,6 @@
 	{
 		window.location.replace("groupchat.html");
 		messageUpdater();
-		// NEED TO FIND THE UID OF THE USER AND ATTACH IT TO THE MESSAGES THEYRE SENDING
-		// IN THE GROUP CHAT
-		var userRef = firebase.auth().currentUser;
-		var uid = userRef.uid;
-		alert('your UID currently bring used is ' + uid);
-		
 	}
 	function messageUpdater()
 	{
