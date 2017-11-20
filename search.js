@@ -172,7 +172,7 @@
 					// search database stuff right here
 					$('#result-text').text("Loading...");
 					var ref = firebase.database().ref("users");
-					ref.on("child_added", function(snapshot) 
+					ref.orderByChild().equalTo('@').on("child_added", function(snapshot) 
 					{
 						
 						snapshot.forEach(function (userData) 

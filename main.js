@@ -91,38 +91,49 @@
 
 		if(email == "" || pass == "" || email == " " || pass == " ")
 		{
-
+			alert('invalid fields');
 		}
 		else
 		{
 				// Before we sign them up into the database we gotta make sure they arent already in it.
-			if(searchfor(email))
-			{
+				// what i tried to do to solve that didnt work so i have to do something else until then commenting
+				// it out. I think its because of the quotation marks in the db
+
+				// realized i need a really big db change in which each email will have a folder with corresponding information
+			//if(searchfor(email))
+			//{
 				try 
 				{
 					auth.createUserWithEmailAndPassword(email, pass);
 					
 					var database = firebase.database();
-					var ref = database.ref("users");
+					var path1 = "users/";
+					email = email.toLowerCase();
+					var emailKey = email.replace(/\./g, ',');
+					var finalpath = path1 + emailKey;
+					var ref = database.ref(finalpath);
+
 					var userInfo = 
 					{
 						email_id: email,
+						username: 'a',
 					}
 
-						ref.push(userInfo);
+						ref.set(userInfo);
 						alert('account created, now login');
 				}
 				catch(e)
 				{
-					alert('something went really wrong with trying to communicate with the database');
+					alert('problem pushing data to database');
+					// periods arent allowed in firebase keys this is why i kept seeing this issue 
 				}
 			
 			
-			}
-			else
-			{
-				alert('Email already has an account!');
-			}
+			//}
+			//else
+			//{
+			//	alert('Email already has an account!');
+			//}
 		}
 		
 		
