@@ -14,7 +14,12 @@
   	// Tells if We're Signed in or not
 	var signedin = false;
 	var currentUser;
-	
+	var messageArray = new Array(2);
+	var lastMessage = new Array(2);
+	lastMessage[0] = "f";
+	lastMessage[1] = "f";
+	var counter = 0;
+	var updateWorker = new Worker('worker.js');
 
 	// Main Function
 	function main() {
@@ -37,48 +42,62 @@
 						email = user.email;
 						photoUrl = user.photoUrl;
 						uid = user.uid;
-
 					}
-					else { alert('authentication lost please re-sign in.'); window.location.replace('index.html');}
+					else 
+					{ 
+						alert('authentication lost please re-sign in.'); 
+						window.location.replace('index.html');
+					}
 
 					currentUser = firebaseUser;
 					$('.welcome-user').text('Welcome ' + email);
 
-					// MESSAGING WONT WORK BECAUSE TO USE FIREBASE CLOUD MESSAGING YOU NEED TO BE USING AN SSL CONNECTION
-					//
-					/////////////////////////////////////////////////////////////////////////////////////////////////////
-					const messaging = firebase.messaging();
-			
-			
+					email = email.toLowerCase();
+					var emailKey = email.replace(/\./g, ',');
+					var path1 = "users/";
+					var finalpath = path1 + emailKey;
+					// if i forgot, firebase database entry keys cant have periods in them so were taking them out
+					// and making the whole email lowercase to avoid any upper/lowercase confusion with the database
+					var dataRef = firebase.database().ref(finalpath);
 
-					messaging.requestPermission()
-					.then(function() 
-					{
-						
-						console.log('Permission to show notifications granted');
-						return messaging.getToken();
-					})
 					
-					.then(function(token) 
-					{
-						console.log(token);
-					})
-					
-					.catch(function(err)
+					dataRef.orderByChild().equalTo('username').on('child_added', function(snapshot)
 						{
-							console.log(err);
+							console.log(snapshot.val());
 						});
 
+					//const messaging = firebase.messaging();
+			
+			
 
-				messaging.setBackgroundMessageHandler(function(payload) 
-					{
+					// messaging.requestPermission()
+					// .then(function() 
+					// {
 						
-						var title = "New Message";
-						var options = {
-							body: payload.data.status// NOT FINISHED WITH THIS
-						}
-						return self.registration.showNotification(title, options);
-					});
+					// 	console.log('Permission to show notifications granted');
+					// 	return messaging.getToken();
+					// })
+					
+					// .then(function(token) 
+					// {
+					// 	console.log(token);
+					// })
+					
+					// .catch(function(err)
+					// 	{
+					// 		console.log(err);
+					// 	});
+
+
+				// messaging.setBackgroundMessageHandler(function(payload) 
+				// 	{
+						
+				// 		var title = "New Message";
+				// 		var options = {
+				// 			body: payload.data.status// NOT FINISHED WITH THIS
+				// 		}
+				// 		return self.registration.showNotification(title, options);
+				// 	});
 
 				///////////////////////////////////////////////////////////////////////////////////////////////////////
 				});
@@ -87,6 +106,7 @@
 				$('.back-button').click(backButton);
 				$('.all-users').click(allUsersButton);
 				$('.group-text').click(groupChatClick);
+				$('.retrieve-button').click(retrieve);
 
 			
 		}
@@ -124,16 +144,39 @@
 		window.location.replace("groupchat.html");
 		messageUpdater();
 	}
+	
+	function retrieve()
+	{
+		messageUpdater();
+	}
+
 	function messageUpdater()
 	{
 		var ref = firebase.database().ref('GC');
-		ref.on("child_added", function(snapshot)
+		ref.orderByKey().limitToLast(1).on("child_added", function(snapshot)
 		{
 			snapshot.forEach(function(iResult)
 			{
-				alert(iResult);
+				messageArray[counter] = iResult.val();
+				counter++;
 			});
 		});
+
+		
+		if(messageArray[0] == lastMessage[0] && messageArray[1] == lastMessage[1])
+		{
+				// if were reading the message we just read why would we put it in the textarea again?
+				counter = 0;
+		}
+		else
+		{
+				$('.message-box').append("Anonymous: " + messageArray[1] + "\n");
+				lastMessage[0] = messageArray[0];
+				lastMessage[1] = messageArray[1];
+				counter = 0;
+		}
+
+		
 
 	}
 	function messageSender(message)
@@ -153,6 +196,7 @@
 			}
 			messagePath.push(messageStruct);
 			$('.send-text').val('');
+			$('.message-box').append("Anonymous: " + message + "\n");
 
 	}
 

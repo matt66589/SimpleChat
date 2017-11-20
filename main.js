@@ -87,14 +87,50 @@
 		const auth = firebase.auth();
 		var email = $('.email-box').val();
 		var pass = $('.password-box').val();
+		var confirmPass = $('.password-confirm').val();
+		var selectedUsername = $('.username-box').val();
 		// First we have to make sure that they typed something
 
-		if(email == "" || pass == "" || email == " " || pass == " ")
+		if(email == "" || pass == "" || email == " " || pass == " " || selectedUsername == "" || selectedUsername == " ")
 		{
 			alert('invalid fields');
 		}
 		else
 		{
+				if(pass == confirmPass)
+				{
+							try 
+						{
+							auth.createUserWithEmailAndPassword(email, pass);
+							
+							var database = firebase.database();
+							var path1 = "users/";
+							email = email.toLowerCase();
+							var emailKey = email.replace(/\./g, ',');
+							var finalpath = path1 + emailKey;
+							var ref = database.ref(finalpath);
+
+							var userInfo = 
+							{
+								email: email,
+								username: selectedUsername,
+							}
+
+								ref.set(userInfo);
+								alert('account created, now login');
+						}
+						catch(e)
+						{
+							alert('problem pushing data to database');
+							// periods arent allowed in firebase keys this is why i kept seeing this issue 
+						}
+				}
+				else
+				{
+						alert("passwords don't match!");
+				}
+
+
 				// Before we sign them up into the database we gotta make sure they arent already in it.
 				// what i tried to do to solve that didnt work so i have to do something else until then commenting
 				// it out. I think its because of the quotation marks in the db
@@ -102,31 +138,7 @@
 				// realized i need a really big db change in which each email will have a folder with corresponding information
 			//if(searchfor(email))
 			//{
-				try 
-				{
-					auth.createUserWithEmailAndPassword(email, pass);
-					
-					var database = firebase.database();
-					var path1 = "users/";
-					email = email.toLowerCase();
-					var emailKey = email.replace(/\./g, ',');
-					var finalpath = path1 + emailKey;
-					var ref = database.ref(finalpath);
-
-					var userInfo = 
-					{
-						email_id: email,
-						username: 'a',
-					}
-
-						ref.set(userInfo);
-						alert('account created, now login');
-				}
-				catch(e)
-				{
-					alert('problem pushing data to database');
-					// periods arent allowed in firebase keys this is why i kept seeing this issue 
-				}
+				
 			
 			
 			//}
