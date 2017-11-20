@@ -1,4 +1,9 @@
-while(true)
+(function(){
+
+alert('WORKER WORKING IFINALLT');
+
+
+		while(true)
 {
 	var ref = firebase.database().ref('GC');
 		ref.orderByKey().limitToLast(1).on("child_added", function(snapshot)
@@ -23,3 +28,5 @@ while(true)
 				lastMessage[1] = messageArray[1];
 				counter = 0;
 }
+
+})();

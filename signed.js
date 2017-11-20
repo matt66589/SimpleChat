@@ -19,7 +19,7 @@
 	lastMessage[0] = "f";
 	lastMessage[1] = "f";
 	var counter = 0;
-	var updateWorker = new Worker('worker.js');
+	var updateWorker;
 
 	// Main Function
 	function main() {
@@ -31,7 +31,7 @@
 			auth.onAuthStateChanged(firebaseUser => 
 				{
 					
-
+					updateWorker = new Worker('worker.js');
 					// Getting the info of the signed in user
 					var user = firebase.auth().currentUser;
 					var name, email, photoUrl, uid, emailVerified;
@@ -66,6 +66,10 @@
 							console.log(snapshot.val());
 						});
 
+					
+
+
+
 					//const messaging = firebase.messaging();
 			
 			
@@ -99,7 +103,8 @@
 				// 		return self.registration.showNotification(title, options);
 				// 	});
 
-				///////////////////////////////////////////////////////////////////////////////////////////////////////
+				///////////////////////////////////////////////////////////////////////////////////////////////////////\
+
 				});
 				$('.signout-button').click(signout);
 				$('.send-message').click(sendMessage);
